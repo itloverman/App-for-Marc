@@ -21,7 +21,7 @@ export default function TabLayout() {
                 options={{
                     title: '',
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon name={require('@/assets/images/icon-tab-1.png')} focus={focused} size={40} />
+                        <TabBarIcon name={require('@/assets/images/icon-tab-1.png')} focus={focused} />
                     ),
                 }}
             />

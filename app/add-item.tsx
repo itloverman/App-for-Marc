@@ -22,6 +22,7 @@ export default function AddItemScreen() {
     const [tabacButton, setTabacButton] = useState(1);
     const [alcoolButton, setAlcoolButton] = useState(1);
     const [selectedList, setSelectedList] = useState(-1);
+    const [selectedLicence, setSelectedLicence] = useState(-1);
 
     const data = [
         {
@@ -53,6 +54,10 @@ export default function AddItemScreen() {
         },
     ];
 
+    const onPressClose = () => {
+        navigation.goBack();
+    }
+
     const onPressTabc = index => {
         setTabacButton(index);
     };
@@ -64,6 +69,10 @@ export default function AddItemScreen() {
     const onPressList = index => {
         setSelectedList(index);
     };
+
+    const onPressLicence = (index) => {
+        setSelectedLicence(index)
+    }
 
     const renderSlider = () => {
         return (
@@ -177,16 +186,26 @@ export default function AddItemScreen() {
 
     const renderRadioBox = () => {
         return (
-            <View>
-                <View style={styles.radioBox}>
-                    <Ionicons size={20} name="radio-button-off" color="#FFFFFF" />
+            <View >
+                <TouchableOpacity  onPress={() => onPressLicence(0)} style={styles.radioBox}>
+                    {
+                        selectedLicence === 0 ?
+                            <Ionicons size={20} name="radio-button-on" color="#FFFFFF"/>
+                            :
+                            <Ionicons size={20} name="radio-button-off" color="#FFFFFF"/>
+                    }
                     <Text style={styles.radioBoxText}>Licence</Text>
-                </View>
+                </TouchableOpacity>
 
-                <View style={[styles.radioBox, { marginTop: 10 }]}>
-                    <Ionicons size={20} name="radio-button-off" color="#FFFFFF" />
+                <TouchableOpacity  onPress={() => onPressLicence(1)} style={[styles.radioBox, { marginTop: 10 }]}>
+                    {
+                        selectedLicence === 1 ?
+                            <Ionicons size={20} name="radio-button-on" color="#FFFFFF"/>
+                            :
+                            <Ionicons size={20} name="radio-button-off" color="#FFFFFF"/>
+                    }
                     <Text style={styles.radioBoxText}>Licence</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         );
     };
@@ -251,13 +270,13 @@ export default function AddItemScreen() {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 0, y: 1 }}
                 style={{ flex: 1 }}>
-                <View style={styles.headerContainer}>
+                <TouchableOpacity onPress={onPressClose} style={styles.headerContainer}>
                     <Text style={styles.manageHeaderButton}>Cancel</Text>
 
                     <Text style={styles.manageHeaderButton}>Filter</Text>
 
                     <Text style={styles.manageHeaderButton}>Done</Text>
-                </View>
+                </TouchableOpacity>
 
                 {renderSlider()}
                 {renderTextBox()}
