@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: '#000',
-        marginTop: 50,
+        marginTop: 0,
     },
     mainContainerSub: { flex: 1, flexDirection: 'column-reverse' },
     listItemButton: {
