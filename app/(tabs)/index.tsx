@@ -42,7 +42,7 @@ export default function HomeScreen() {
                     </View>
                     <View>
                         <Image
-                            source={require('@/assets/images/icon-tab-1.png')}
+                            source={require('@/assets/images/icon-heart.png')}
                             style={styles.iconBottomRight}
                         />
                         <Image

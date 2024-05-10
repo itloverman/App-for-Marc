@@ -23,6 +23,7 @@ export default function AddItemScreen() {
     const [alcoolButton, setAlcoolButton] = useState(1);
     const [selectedList, setSelectedList] = useState(-1);
     const [selectedLicence, setSelectedLicence] = useState(-1);
+    const [selectedDropDown, setSelectedDropDown] = useState(-1);
 
     const data = [
         {
@@ -56,7 +57,7 @@ export default function AddItemScreen() {
 
     const onPressClose = () => {
         navigation.goBack();
-    }
+    };
 
     const onPressTabc = index => {
         setTabacButton(index);
@@ -70,9 +71,17 @@ export default function AddItemScreen() {
         setSelectedList(index);
     };
 
-    const onPressLicence = (index) => {
-        setSelectedLicence(index)
-    }
+    const onPressLicence = index => {
+        setSelectedLicence(index);
+    };
+
+    const onPressBox = index => {
+        if (selectedDropDown === index) {
+            setSelectedDropDown(-1);
+        } else {
+            setSelectedDropDown(index);
+        }
+    };
 
     const renderSlider = () => {
         return (
@@ -114,10 +123,37 @@ export default function AddItemScreen() {
         );
     };
 
+    const renderDropDown = () => {
+        return (
+            <View style={styles.listItem}>
+                {data?.map((item, index) => {
+                    return (
+                        <TouchableOpacity
+                            style={styles.listSub}
+                            onPress={() => onPressList(index)}>
+                            {(selectedList === index && (
+                                <IoniconsIcons size={25} name={'checkbox'} color="#FFFFFF" />
+                            )) || (
+                                <MaterialCommunityIcons
+                                    size={25}
+                                    name={'checkbox-blank-outline'}
+                                    color="#FFFFFF"
+                                />
+                            )}
+                            <Text style={styles.listText}>{item?.name}</Text>
+                        </TouchableOpacity>
+                    );
+                })}
+            </View>
+    );
+    };
+
     const renderTextBox = () => {
         return (
             <View style={styles.boxContainer}>
-                <View style={styles.textInput}>
+                <TouchableOpacity
+                    onPress={() => onPressBox(0)}
+                    style={styles.textInput}>
                     <View style={{ marginTop: 12 }}>
                         <Text style={{ fontSize: 13, fontWeight: '500', color: '#FF9433' }}>
                             Origine
@@ -137,9 +173,13 @@ export default function AddItemScreen() {
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <AntDesign size={20} name="caretdown" color="#FFFFFF" />
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={[styles.textInput, { marginTop: 20 }]}>
+                {(selectedDropDown === 0 && renderDropDown()) || null}
+
+                <TouchableOpacity
+                    onPress={() => onPressBox(1)}
+                    style={[styles.textInput, { marginTop: 20 }]}>
                     <View style={{ marginTop: 12 }}>
                         <Text style={{ fontSize: 13, fontWeight: '500', color: '#FF9433' }}>
                             Religion
@@ -158,52 +198,35 @@ export default function AddItemScreen() {
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <AntDesign size={20} name="caretdown" color="#FFFFFF" />
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.listItem}>
-                    {data?.map((item, index) => {
-                        return (
-                            <TouchableOpacity
-                                style={styles.listSub}
-                                onPress={() => onPressList(index)}>
-                                {(selectedList === index && (
-                                    <IoniconsIcons size={25} name={'checkbox'} color="#FFFFFF" />
-                                )) || (
-                                    <MaterialCommunityIcons
-                                        size={25}
-                                        name={'checkbox-blank-outline'}
-                                        color="#FFFFFF"
-                                    />
-                                )}
-                                <Text style={styles.listText}>{item?.name}</Text>
-                            </TouchableOpacity>
-                        );
-                    })}
-                </View>
+                {(selectedDropDown === 1 && renderDropDown()) || null}
             </View>
         );
     };
 
     const renderRadioBox = () => {
         return (
-            <View >
-                <TouchableOpacity  onPress={() => onPressLicence(0)} style={styles.radioBox}>
-                    {
-                        selectedLicence === 0 ?
-                            <Ionicons size={20} name="radio-button-on" color="#FFFFFF"/>
-                            :
-                            <Ionicons size={20} name="radio-button-off" color="#FFFFFF"/>
-                    }
+            <View>
+                <TouchableOpacity
+                    onPress={() => onPressLicence(0)}
+                    style={styles.radioBox}>
+                    {selectedLicence === 0 ? (
+                        <Ionicons size={20} name="radio-button-on" color="#FFFFFF" />
+                    ) : (
+                        <Ionicons size={20} name="radio-button-off" color="#FFFFFF" />
+                    )}
                     <Text style={styles.radioBoxText}>Licence</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity  onPress={() => onPressLicence(1)} style={[styles.radioBox, { marginTop: 10 }]}>
-                    {
-                        selectedLicence === 1 ?
-                            <Ionicons size={20} name="radio-button-on" color="#FFFFFF"/>
-                            :
-                            <Ionicons size={20} name="radio-button-off" color="#FFFFFF"/>
-                    }
+                <TouchableOpacity
+                    onPress={() => onPressLicence(1)}
+                    style={[styles.radioBox, { marginTop: 10 }]}>
+                    {selectedLicence === 1 ? (
+                        <Ionicons size={20} name="radio-button-on" color="#FFFFFF" />
+                    ) : (
+                        <Ionicons size={20} name="radio-button-off" color="#FFFFFF" />
+                    )}
                     <Text style={styles.radioBoxText}>Licence</Text>
                 </TouchableOpacity>
             </View>
